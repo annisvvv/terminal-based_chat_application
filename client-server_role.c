@@ -10,7 +10,7 @@
 #define BACKLOG_QUEUE_SIZE 5
 #define BUFFER_SIZE 1024
 #define PORT 8080
-#define SERVER_IP "127.0.0.1"
+
 int main() {
     
     int sockfd = socket(AF_INET, SOCK_STREAM, 0); //(fro ipv4, socket type TCP, default protocol) 
@@ -83,9 +83,13 @@ int main() {
             close(sockfd);
     }
     else if (choice == 2){
+            char server_ip[16];
+            printf("Enter the server IP address: ");
+            scanf("%15s", server_ip);
+            getchar(); // consume the newline character
 
             //convert text ip to binary
-        if (inet_pton(AF_INET, SERVER_IP, &server_addr.sin_addr) <= 0) { 
+        if (inet_pton(AF_INET, server_ip, &server_addr.sin_addr) <= 0) { 
             perror("Invalid address or address not supported");
             exit(1);
         }

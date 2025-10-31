@@ -7,10 +7,15 @@
 #include <stdlib.h>
 
 #define PORT 8080
-#define SERVER_IP "127.0.0.1"
 #define BUFFER_SIZE 1024
 
-int main(){
+int main(int argc, char const *argv[]){
+    const char *server_ip;
+    if (argc > 1) {
+        server_ip = argv[1];
+    } else {
+        server_ip = "127.0.0.1";
+    }
 
     int sockfd = socket(AF_INET, SOCK_STREAM, 0);
     if (sockfd == -1){
@@ -22,10 +27,8 @@ int main(){
     struct sockaddr_in server_addr;
     server_addr.sin_family = AF_INET;
     server_addr.sin_port = htons(8080);
-    //inet_pton(AF_INET, SERVER_IP, &server_addr.sin_addr); //####
 
-    //convert text ip to binary
-    if (inet_pton(AF_INET, SERVER_IP, &server_addr.sin_addr) <= 0) { 
+    if (inet_pton(AF_INET, server_ip, &server_addr.sin_addr) <= 0) { 
         perror("Invalid address or address not supported");
         exit(1);
     }
