@@ -17,17 +17,17 @@ int main() {
     // sockfd return 0 if the socket is create 
     // -1 if not
     if (sockfd == -1){ //check for error
-        perror("failed socket.");
+        perror("failed socket.\n");
         return 1;
     }
-    printf("Socket created succesfully");
+    printf("Socket created succesfully\n");
 
     struct sockaddr_in server_addr;
     server_addr.sin_family = AF_INET; //AF_NET for IPv4
     server_addr.sin_port = htons(8080); //specify the port
     server_addr.sin_addr.s_addr = INADDR_ANY; //specify the ip range
 
-    printf("do you want to listen oor connect (1/2) :");
+    printf("do you want to listen oor connect (1/2) :\n");
     int choice;
     scanf("%d", &choice);
     getchar(); // consume the newline character
@@ -36,14 +36,14 @@ int main() {
         
             //bind the socket to the local ip and port number
         if (bind(sockfd, (struct sockaddr*)&server_addr, sizeof(server_addr)) == -1){ 
-            perror("bind failed");
+            perror("bind failed\n");
             return 1;
         }
         printf("Socket created succesfully!\n");
 
     
         if (listen(sockfd, BACKLOG_QUEUE_SIZE) == -1){
-            perror("Error listening");
+            perror("Error listening\n");
             return 1;
         }
 
@@ -53,10 +53,10 @@ int main() {
 
         int client_fd = accept(sockfd, (struct sockaddr *)&client_addr, &client_size);
         if (client_fd == -1){
-            perror("error accepting connexion");
+            perror("error accepting connexion\n");
             exit(1);
         }
-        printf("client connected\n");
+        printf("client connected\n\n");
 
         char buffer[BUFFER_SIZE];
         while(1){
@@ -84,21 +84,21 @@ int main() {
     }
     else if (choice == 2){
             char server_ip[16];
-            printf("Enter the server IP address: ");
+            printf("\nEnter the server IP address: ");
             scanf("%15s", server_ip);
             getchar(); // consume the newline character
 
             //convert text ip to binary
         if (inet_pton(AF_INET, server_ip, &server_addr.sin_addr) <= 0) { 
-            perror("Invalid address or address not supported");
+            perror("\nInvalid address or address not supported\n");
             exit(1);
         }
 
         if (connect(sockfd, (struct sockaddr *)&server_addr, sizeof(server_addr)) == -1){
-        perror("connexion failed");
+        perror("connexion failed\n");
         exit(1);
         }
-        printf("connexion established"); 
+        printf("connexion established\n\n"); 
         
         char buffer[BUFFER_SIZE];
         while (1) {
