@@ -30,7 +30,7 @@ int main() {
     printf("do you want to listen oor connect (1/2) :\n");
     int choice;
     scanf("%d", &choice);
-    getchar(); // consume the newline character
+    getchar(); // consume the newline character 
 
     if (choice == 1){
         
